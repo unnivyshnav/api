@@ -18,8 +18,9 @@ router.post("/", verify, async (req, res) => {
 //UPDATE POST
 router.put("/:id", verify, async (req, res) => {
   try {
+    console.log(req.user.isAdmin);
     const post = await Post.findById(req.params.id);
-    if (post.username === req.body.username) {
+    if (post.username === req.body.username || req.user.isAdmin) {
       try {
         const updatedPost = await Post.findByIdAndUpdate(
           req.params.id,
